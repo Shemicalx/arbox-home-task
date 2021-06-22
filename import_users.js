@@ -8,9 +8,9 @@ const argv = yargs(hideBin(process.argv)).argv;
 const xlsx = require('xlsx');
 //Test if file path command line argument was passed
 if(argv.filePath) {
-    // const workbook = xlsx.readFile(argv.filePath);
-    // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    console.log("File Path: " + argv.filePath);
+    const workbook = xlsx.readFile(argv.filePath);
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    console.log(worksheet);
 }else {
     console.log("Usage: ./import_users.js --file-path=<path>");
 }
