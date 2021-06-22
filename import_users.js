@@ -22,9 +22,8 @@ if(argv.filePath && argv.clubId) {
     let customers = [];
     let customer = {};
     //Iterate over the excel sheet and create a new customers array
-    //At the moment, it does not check for the name of the column, rather it is
-    //hardcoded, assuming column 'A' is always 'first_name' and so on,
-    //just like in the jimalaya.xlsx file I received
+    //It is hardcoded, assuming that column 'A' is always 'first_name' and so on,
+    //just like in the jimalaya.xlsx file I received.
     for (let cell in worksheet) {
         const cellAsString = cell.toString();
         if (cellAsString[1] !== 'r' && cellAsString[1] !== 'm' && cellAsString[1] > 1) {
@@ -53,22 +52,31 @@ if(argv.filePath && argv.clubId) {
                 customers.push(customer);
                 customer = {};
             }
+
+            //I assumed the DB we got was already functional, and so testing if every field
+            //was present was unnecessary. Coulve adde an 'else' to each condition to stop the
+            //script, but decided not to. 
         }
     }
     
-    /*Insert all customers from the array.
-    Alternatively, could be done in a single command like so - 
-        console.log(`
-            INSERT INTO ar_db (${Object.keys(customers[0])})
-            VALUES ${customers.map( customer => {
-                return `(${Object.values(customer)})`
-            })}`
-        )
-    */
+    //Insert all customers from the array.
     for (let customerToInsert in customers) {
         console.log(`INSERT INTO ar_db (${Object.keys(customers[0])}) VALUES (${Object.values(customers[customerToInsert])})`);
     }
+    // Alternatively, the code above could be done in a single command like so - 
+    //     console.log(`
+    //         INSERT INTO ar_db (${Object.keys(customers[0])})
+    //         VALUES ${customers.map( customer => {
+    //             return `(${Object.values(customer)})`
+    //         })}`
+    //     );
 
 } else {
     console.log("Usage: ./import_users.js --file-path=<path> --club-id=<id>");
 }
+
+// Usage notes are at the top ^
+
+// THANK YOU FOR REVIEWING MY CODE!
+//            ========
+//     Have a wonderful day :)
